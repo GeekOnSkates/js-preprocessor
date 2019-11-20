@@ -11,7 +11,8 @@ require([
 	"module/to/include"
 ], function(myModule){
 	// code
-});```
+});
+```
 
 And Node copied the "import" keyword from Python/Java, which is good for them (lol), but not possible for web apps (yet?).  It's also a bit more complex than in languages like Python or C, though of course that could just be my limited experience talking.  And of course, the default way is a ton of &lt;script&gt; tags - which will always have its place IMO (otherwise you could be dumping a megabyte or two on users when the page loads).  But it's still not helpful for our development workflow, cuz we all seem to want a better way.
 
@@ -23,7 +24,8 @@ For keyboard events, I've often seen (and wrote) crap like this:
 const Keys = {
 	LEFT: 37, RIGHT: 39, UP, 38, DOWN: 40, SPACE: 32,
 	// etc.
-}```
+}
+```
 
 Similarly, I find I use constants that are not part of the language.  Constants are a useful tool, but they can add unnecessary bytes to the download size too.  For example, let's say I have code like this:
 
@@ -38,7 +40,8 @@ makeFruitSalad(APPLES | ORANGES | BANANAS | GRAPES);```
 Wouldn't the code be lighter if we just did:
 
 ```js
-makeFruitSalad(1 | 2 | 4 | 8); // or even just "15"?```
+makeFruitSalad(1 | 2 | 4 | 8); // or even just 15?
+```
 
 This simple change saves 5 lines of code and 5-6 bytes per parameter.  And this is just a stupid demo - in a real program, anytime constants are used, we could be making our code a lot lighter.
 
