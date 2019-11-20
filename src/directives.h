@@ -7,8 +7,6 @@
 
 extern FILE *out;
 extern FILE *in;
-extern char inQuotes;
-extern char quoteEscaped;
 
 struct define {
 	char *key;
@@ -19,13 +17,22 @@ struct define {
 };
 typedef struct define Define;
 
+extern Define head;
+
+/**
+ * This is the main file-reading loop
+ * @param [in] Pointer to a FILE struct
+ */
+void read_file(FILE *file);
+
 /**
  * Checks if a character is the start of a #directive,
  * processes it if it is, prints it to the file if not
  * @param [in] The last character read from the input file
+ * @param [in] Pointer to the FILE structure we're reading
  * @returns 1 if it was a #directive, 0 (false) otherwise
  */
-char isDirective(char c);
+char is_directive(char c, FILE *file);
 
 /**
  * Includes a file's contents (#include)

@@ -1,8 +1,8 @@
-// TO-DO: handle "includes within includes"!
-// Like here, test.js includes 2 more scripts
-// Also, includes in comments
+// TO-DO: Now it handles "includes within includes"
+// but that broke includes inside strings (which users shouldn't do,
+// but they might.  Also, includes in comments
 
-#include "./include-example.js"
+#include "./tests.js"
 
 #define TEST 123;
 
