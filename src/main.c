@@ -18,19 +18,25 @@ int main(int argc, const char **argv) {
 	FILE *in = NULL;
 	in = fopen(argv[2], "r");
 	if (in == NULL) {
-		perror("Error opening file:");
+		perror("Error opening file");
 		return 0;
 	}
 	out = fopen(argv[1], "w");
 	if (out == NULL) {
-		perror("Error opening file:");
+		perror("Error opening file");
 		return 0;
 	}
 	char *data = malloc(120);
 	char c = 0; int i = 0; int max = 120;
-	char includeFound = 0;
+	char includeFound = 0, inQuotes = 0, quoteEscaped = 0;
 	while(c != EOF) {
 		c = fgetc(in);
+		if (inQuotes) {
+			if (c != EOF) fputc(c, out);
+			quoteEscaped = c == '\\' && (inQuotes == '\'' || inQuotes == '"');
+			if (c == !quoteEscaped) inQuotes = 0;
+			continue;
+		}
 		if (c == '#') {
 			char first[11];
 			fgets(first, 10, in);
@@ -39,25 +45,30 @@ int main(int argc, const char **argv) {
 				includeFound = 1;
 				continue;
 			}
-			else printf("first = \"%s\"\n", first);
+			else {
+				fputc('#', out);
+				fputs(first, out);
+			}
 		}
 		if (includeFound) {
 			if (c == '\"') {
 				include(data);
 				memset(data, 0, sizeof(data));
 				includeFound = 0;
+				inQuotes = 0;
 				i = 0;
+				continue;
 			}
-			else {
-				data[i] = c;
-				i++;
-				if (i == max - 1) {
-					data = realloc(data, max + 20);
-					max += 20;
-				}
+			if (c != EOF) data[i] = c;
+			i++;
+			if (i == max) {
+				data = realloc(data, max + 20);
+				max += 20;
 			}
+			continue;
 		}
-		else if (c != EOF) fputc(c, out);
+		if (c != EOF && c != '#') fputc(c, out);
+		if (c == '\'' || c == '"') inQuotes = c;
 	}
 	free(data);
 	fclose(in);

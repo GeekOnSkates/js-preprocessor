@@ -11,7 +11,7 @@ void include(char *path) {
 	FILE *includeThis = NULL;
 	includeThis = fopen(path, "r");
 	if (includeThis == NULL) {
-		perror("Error opening #included file:");
+		perror("Error opening #included file");
 		return;
 	}
 	char c = 0;
