@@ -35,7 +35,8 @@ const ORANGED = 2;
 const BANANAS = 4;
 const GRAPES = 8;
 
-makeFruitSalad(APPLES | ORANGES | BANANAS | GRAPES);```
+makeFruitSalad(APPLES | ORANGES | BANANAS | GRAPES);
+```
 
 Wouldn't the code be lighter if we just did:
 

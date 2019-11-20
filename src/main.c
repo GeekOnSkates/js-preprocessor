@@ -6,6 +6,8 @@
 
 FILE *out = NULL;
 
+Define head = { 0 };
+
 int main(int argc, const char **argv) {
 	if (argc != 3
 	|| strcmp(argv[1], "-h") == 0
@@ -26,6 +28,7 @@ int main(int argc, const char **argv) {
 		perror("Error opening file");
 		return 0;
 	}
+	define_init(&head);
 	char *data = malloc(120);
 	char c = 0; int i = 0; int max = 120;
 	char includeFound = 0, inQuotes = 0, quoteEscaped = 0;
@@ -70,6 +73,7 @@ int main(int argc, const char **argv) {
 		if (c != EOF && c != '#') fputc(c, out);
 		if (c == '\'' || c == '"') inQuotes = c;
 	}
+	define_free(&head);
 	free(data);
 	fclose(in);
 	fclose(out);

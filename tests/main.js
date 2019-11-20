@@ -1,10 +1,11 @@
-#include "./include-example.js"
-#include "./another-example.js"
+// TO-DO: handle "includes within includes"!
+// Like here, test.js includes 2 more scripts
+
+// Also, includes in comments
+// '#include "tests.js"'
+
+#define TEST 123;
 
 function main() {
-	example("Boom!", "See?  It worked!");
-	example("Will this break?", "#include maybe");
-	example("What about tweets?", "#whatageek");
-	example("Those didn't break, what about this?", '#include "./include-example.js"');
-	example("Or this?", '\'#include "./include-example.js"');
+	console.log(TEST);
 }
