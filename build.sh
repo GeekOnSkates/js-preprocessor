@@ -1,2 +1,2 @@
-gcc -o ./bin/jsp ./src/main.c
+clear && gcc -o ./bin/jsp ./src/main.c
 

@@ -30,15 +30,18 @@ int main(int argc, const char **argv) {
 	char c = 0; int i = 0; int max = 120;
 	char includeFound = 0;
 	while(c != EOF) {
-		if (i == 0) {
-			char first[11];
-			fgets(first, 11, in);
-			if (strcmp(first, "#include \"") == 0)
-				includeFound = 1;
-		}
 		c = fgetc(in);
+		if (c == '#') {
+			char first[11];
+			fgets(first, 10, in);
+			if (strcmp(first, "include \"") == 0) {
+				i = 0;
+				includeFound = 1;
+				continue;
+			}
+			else printf("first = \"%s\"\n", first);
+		}
 		if (includeFound) {
-			
 			if (c == '\"') {
 				include(data);
 				memset(data, 0, sizeof(data));
@@ -47,16 +50,14 @@ int main(int argc, const char **argv) {
 			}
 			else {
 				data[i] = c;
+				i++;
+				if (i == max - 1) {
+					data = realloc(data, max + 20);
+					max += 20;
+				}
 			}
-			i++;
-			if (i == max - 1) {
-				data = realloc(data, max + 20);
-				max += 20;
-			}
-			continue;
 		}
-		i++;
-		if (c != EOF) fputc(c, out);
+		else if (c != EOF) fputc(c, out);
 	}
 	free(data);
 	fclose(in);
